@@ -27,7 +27,7 @@ const Header = () => {
       </button>
 
       <button className={style.button}>
-        <Image className={style.avatar} src="/img/avatar.png" width={51} height={51} alt='Avatar' />
+        <Image className={style.avatar} src="/img/avatar.png" width={61} height={61} alt='Avatar' />
       </button>
     </div>
 

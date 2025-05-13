@@ -1,0 +1,283 @@
+.control {
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  background-color: #0b1822;
+  border-radius: 15px;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 11px;
+  padding: 14px 3px;
+  background-color: #020a0e;
+  border-radius: 15px;
+  justify-content: space-between;
+}
+
+.action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  background-color: #030f17;
+  border: 3px solid #294354;
+  border-radius: 15px;
+  width: 100%;
+  font-weight: 900;
+
+  color: #1a2832;
+  font-size: 27px;
+
+  @media (any-hover: hover) {
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    &:hover {
+      background-color: #162c39;
+      color: #41657c;
+    }
+  }
+}
+
+.betButton {
+  grid-column: 1 / 3;
+  font-weight: 900;
+  background-color: #ffef1a;
+  border-radius: 15px;
+  box-shadow:
+    inset 0 -4px 4px 0px #d8a215,
+    inset 0 4px 4px 0px #ffc736;
+  font-size: 27px;
+  padding: 16px 0;
+  text-align: center;
+  text-transform: uppercase;
+  position: relative;
+  transition: all 0.3s ease 0s;
+  color: #020a0e;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 75px;
+    height: 3px;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 12px;
+  }
+
+  :not(:disabled) {
+    @media (any-hover: hover) {
+      cursor: pointer;
+      &:hover {
+        transform: scale(0.99);
+      }
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: #8d8715;
+    box-shadow:
+      inset 0 -4px 4px 0px #765d12,
+      inset 0 4px 4px 0px #8d711e;
+
+    &::before {
+      background-color: #a1977b;
+    }
+  }
+}
+
+.widgets {
+  display: flex;
+  width: 100%;
+  gap: 11px;
+  justify-content: space-between;
+  gap: 3px;
+}
+
+.widget {
+  width: 100%;
+  padding: 5px 11px;
+
+  &:is(:first-child) {
+    position: relative;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 3px;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-color: #030f17;
+    }
+  }
+}
+
+.widgetText {
+  font-weight: 900;
+  font-size: 16px;
+  color: #41657c;
+  text-transform: uppercase;
+}
+
+.widgetAchievements {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.widgetCollected {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.collectedList {
+  display: flex;
+  // align-items: center;
+  gap: 4px;
+}
+
+.collectedItem {
+  background-color: #030f17;
+  border: 1px solid #132b3d;
+  border-radius: 2.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 4px;
+}
+
+.input {
+  color: #fff;
+  border: 3px solid #294354;
+  border-radius: 15px;
+  padding: 14px 20px;
+  font-size: 27px;
+  margin-top: 7px;
+  margin-bottom: 11px;
+  background: transparent;
+  font-weight: 900;
+
+  &::placeholder {
+    color: #1a2832;
+  }
+}
+
+.switch {
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 900;
+  color: #294354;
+  gap: 6px;
+  text-transform: uppercase;
+}
+
+.achievements {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 3px 0;
+}
+
+.achievement {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #0b1822;
+}
+
+.achievementHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a2832;
+  padding: 5px 12px;
+  box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.3);
+}
+
+.achievementHeadLeft {
+  display: flex;
+  align-items: center;
+}
+
+.achievementState {
+  color: #fff;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.achievementBonuse {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  font-size: 16px;
+  color: #f4c318;
+  margin-right: 25px;
+}
+
+.achievementProgress {
+  display: flex;
+  align-items: center;
+}
+
+.achievementProgressBar {
+  border-radius: 2px;
+  height: 5px;
+  width: 111px;
+  background-color: #000;
+  position: relative;
+  margin-right: 5px;
+}
+
+.achievementProgressBarValue {
+  background-color: #ffed1a;
+  box-shadow: inset 0 0 4px 0 #da9820;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 2px;
+  height: 100%;
+  width: 75%;
+}
+
+.achievementProgressFraction {
+  margin-left: 10px;
+  font-size: 15px;
+  font-weight: 900;
+  color: #435968;
+}
+
+.achievementProgressFractionValue {
+  color: #fbe32e;
+}
+
+.achievementDesc {
+  padding: 14px 10px;
+  color: #41657c;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.achievementsTitle {
+  padding: 8px 16px;
+  background-color: #1a2832;
+  color: #41657c;
+  font-weight: 900;
+  font-size: 16px;
+}
