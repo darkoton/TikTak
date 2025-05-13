@@ -1,0 +1,19 @@
+@use "sass:math";
+
+// Responsive property
+@mixin fluid($property, $max, $min, $min-screen: 320px, $max-screen: 430px) {
+  & {
+    #{$property}: #{$max};
+  }
+
+  @media (max-width: #{$max-screen}) {
+    $value-range: math.div($min - $max, 1px);
+    $screen-range: math.div($max-screen - $min-screen, 1px);
+
+    #{$property}: calc(#{$min} - #{$value-range} * (100vw - #{$min-screen}) / #{$screen-range});
+  }
+
+  @media (max-width: #{$min-screen}) {
+    #{$property}: #{$min};
+  }
+}

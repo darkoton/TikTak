@@ -1,0 +1,93 @@
+.header {
+  background: #0b1822;
+  padding: 32px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  margin-left: 36px;
+  font-weight: 900;
+  font-size: 76.49px;
+  color: #fff;
+}
+
+.balance {
+  display: flex;
+  // align-items: center;
+  border: 6px solid #122a3b;
+  border-radius: 15px;
+}
+
+.balanceValue {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #fff;
+  font-size: 46px;
+  padding: 34px 45px;
+}
+
+.balanceButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 48px;
+  background-color: #ffef1a;
+  border-radius: 15px;
+  box-shadow:
+    inset 0 -8px 8px 0px #d8a215,
+    inset 0 8px 8px 0px #ffc736;
+  transform: scale(1.08);
+  position: relative;
+  transition: all 0.3s ease 0s;
+
+  @media (any-hover: hover) {
+    cursor: pointer;
+    &:hover {
+      transform: scale(1);
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    width: 58px;
+    height: 11px;
+    background: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    top: 4px;
+    left: 10px;
+  }
+}
+
+.balanceButtonIcon {
+  font-size: 46px;
+}
+
+.menu {
+  display: flex;
+  gap: 33px;
+}
+
+.button {
+  border-radius: 15px;
+  background: #030f15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 114px;
+  height: 119px;
+  border: 6px solid #122a3b;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
