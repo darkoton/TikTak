@@ -1,0 +1,33 @@
+.navigation {
+  display: flex;
+  border: 4px solid #122a3a;
+  border-radius: 17.5px 17.5px 0 0;
+  border-bottom-width: 0;
+  overflow: hidden;
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 16px 0;
+  font-size: 15px;
+  color: #fff;
+  text-align: center;
+  background: #09151f;
+
+  &:not(:last-child) {
+    background-repeat: no-repeat;
+    border-right: 1px solid #122a3a;
+  }
+
+  @media (any-hover: hover) {
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    &:hover {
+      background-color: #0b1822;
+    }
+  }
+}

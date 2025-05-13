@@ -1,0 +1,19 @@
+.footer {
+  background-color: #0f212e;
+  padding: 16px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.link {
+  font-size: 15px;
+  color: #fff;
+
+  @media (any-hover: hover) {
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    &:hover {
+      color: #fbe32e;
+    }
+  }
+}

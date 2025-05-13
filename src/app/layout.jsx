@@ -30,9 +30,7 @@ export default function RootLayout({ children }) {
       <body className={proximaNova.className}>
         <div className="wrapper">
           <div className="content">
-            <div className='container'>
-              {children}
-            </div>
+            {children}
           </div>
         </div>
       </body>

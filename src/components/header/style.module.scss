@@ -1,44 +1,44 @@
 .header {
   background: #0b1822;
-  padding: 32px 18px;
+  padding: 16px 9px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .logo {
-  margin-left: 36px;
+  margin-left: 18px;
   font-weight: 900;
-  font-size: 76.49px;
+  font-size: 38px;
   color: #fff;
 }
 
 .balance {
   display: flex;
   // align-items: center;
-  border: 6px solid #122a3b;
-  border-radius: 15px;
+  border: 3px solid #122a3b;
+  border-radius: 7.5px;
 }
 
 .balanceValue {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 7px;
   color: #fff;
-  font-size: 46px;
-  padding: 34px 45px;
+  font-size: 23px;
+  padding: 17px 22.5px;
 }
 
 .balanceButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 36px 48px;
+  padding: 18px 24px;
   background-color: #ffef1a;
-  border-radius: 15px;
+  border-radius: 7.5px;
   box-shadow:
-    inset 0 -8px 8px 0px #d8a215,
-    inset 0 8px 8px 0px #ffc736;
+    inset 0 -4px 4px 0px #d8a215,
+    inset 0 4px 4px 0px #ffc736;
   transform: scale(1.08);
   position: relative;
   transition: all 0.3s ease 0s;
@@ -57,33 +57,33 @@
   &:before {
     content: "";
     display: block;
-    width: 58px;
-    height: 11px;
+    width: 29px;
+    height: 5.5px;
     background: rgba(255, 255, 255, 0.9);
     position: absolute;
-    top: 4px;
-    left: 10px;
+    top: 2px;
+    left: 5px;
   }
 }
 
 .balanceButtonIcon {
-  font-size: 46px;
+  font-size: 23px;
 }
 
 .menu {
   display: flex;
-  gap: 33px;
+  gap: 16.5px;
 }
 
 .button {
-  border-radius: 15px;
+  border-radius: 7.5px;
   background: #030f15;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 114px;
-  height: 119px;
-  border: 6px solid #122a3b;
+  width: 57px;
+  height: 59.5px;
+  border: 3px solid #122a3b;
 }
 
 .avatar {

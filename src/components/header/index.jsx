@@ -11,7 +11,7 @@ const Header = () => {
 
       <div className={style.balanceValue}>
         <span>$ 35.32</span>
-        <Image className={style.balanceCurrency} src="/img/icons/ton.png" width={54} height={54} alt="Ton" />
+        <Image className={style.balanceCurrency} src="/img/icons/ton.png" width={27} height={27} alt="Ton" />
       </div>
 
       <button className={style.balanceButton}>
@@ -23,11 +23,11 @@ const Header = () => {
 
     <div className={style.menu}>
       <button className={`${style.button} ${style.buttonMoney}`}>
-        <Image width={66} height={66} src="/img/icons/money.png" alt='Icon money' />
+        <Image width={33} height={33} src="/img/icons/money.png" alt='Icon money' />
       </button>
 
       <button className={style.button}>
-        <Image className={style.avatar} src="/img/avatar.png" width={103} height={103} alt='Avatar' />
+        <Image className={style.avatar} src="/img/avatar.png" width={51} height={51} alt='Avatar' />
       </button>
     </div>
 
