@@ -16,6 +16,8 @@
   background-color: #020a0e;
   border-radius: 15px;
   justify-content: space-between;
+  position: relative;
+  z-index: 2;
 }
 
 .action {
@@ -92,6 +94,48 @@
     &::before {
       background-color: #a1977b;
     }
+  }
+}
+
+.buttonIcon {
+  font-size: 30px;
+  animation: pulse 1s ease 0s infinite alternate both;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.1) rotate(10deg);
+  }
+  20% {
+    transform: scale(1.2) rotate(30deg);
+  }
+  30% {
+    transform: scale(1.3) rotate(20deg);
+  }
+  40% {
+    transform: scale(1.3) rotate(10deg);
+  }
+  50% {
+    transform: scale(1.3) rotate(0deg);
+  }
+  60% {
+    transform: scale(1.3) rotate(-10deg);
+  }
+  70% {
+    transform: scale(1.3) rotate(-30deg);
+  }
+  80% {
+    transform: scale(1.3) rotate(-10deg);
+  }
+  90% {
+    transform: scale(1.3) rotate(-30deg);
+  }
+
+  100% {
+    transform: scale(0.9) rotate(0deg);
   }
 }
 
@@ -172,6 +216,10 @@
 
   &::placeholder {
     color: #1a2832;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }
 

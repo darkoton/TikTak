@@ -1,0 +1,239 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  // position: absolute;
+}
+
+.title {
+  border-radius: 10px;
+  background-color: #162c39;
+  font-size: 23px;
+  color: #41657c;
+  border: 3px solid #030f17;
+  position: relative;
+  padding: 20px 100px;
+  margin-bottom: 15px;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    border-radius: 10px;
+    background-color: #162c39;
+    width: 60px;
+    height: 50px;
+    z-index: -1;
+  }
+  &::before {
+    left: 0;
+    transform: translate(-50%, 50%);
+  }
+  &::after {
+    right: 0;
+    transform: translate(50%, 50%);
+  }
+}
+.subtitle {
+  font-size: 23px;
+  color: #41657c;
+}
+.lea {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  // position: relative;
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: flex-end;
+  position: relative;
+}
+
+.button {
+  border: 3px solid #294354;
+  color: #41657c;
+  border-radius: 15px;
+  padding: 24px 22px;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 9px;
+
+  @media (any-hover: hover) {
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    &:hover {
+      background-color: #162c39;
+    }
+  }
+}
+
+.betting {
+  display: flex;
+  align-items: center;
+  position: absolute;
+}
+
+.bettingArc {
+  position: relative;
+
+  span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    color: #162c39;
+    font-weight: 900;
+  }
+
+  &.bettingArcLeft {
+    span {
+      transform: translate(-75%, -50%) rotate(90deg);
+    }
+  }
+
+  &.bettingArcRight {
+    span {
+      transform: translate(-35%, -50%) rotate(-90deg);
+    }
+  }
+}
+
+.bettingArcRight {
+  img {
+    transform: scaleX(-1);
+  }
+}
+
+.bettingChip {
+  padding: 20px;
+  border-radius: 50%;
+  border: 9px solid #41657c;
+  margin: 0 -5px;
+}
+
+.chips {
+  height: 350px;
+  width: 100%;
+  position: absolute;
+  background: rgba(255, 0, 0, 0.4);
+  border-radius: 50%;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(33, 54, 68, 0.8);
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
+  transition: all 0.3s ease 0s;
+
+  &.active {
+    transform: translateY(40%);
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.chip {
+  position: absolute;
+  padding: 4px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+
+  @media (any-hover: hover) {
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    &:hover {
+      border-color: #fff;
+    }
+  }
+
+  span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 14px;
+  }
+}
+
+.chipNote {
+  position: absolute;
+  font-size: 12px;
+  right: 2%;
+  bottom: 41%;
+}
+
+.chipSum {
+  position: absolute;
+  left: 50%;
+  bottom: 43%;
+  transform: translateX(-50%);
+  border: 4px solid #41667d;
+  border-radius: 50%;
+
+  span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 35px !important;
+  }
+}
+
+.hand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  &.handUser {
+    top: 55%;
+  }
+
+  &.handRival {
+    top: 0%;
+  }
+}
+
+.cards {
+  display: flex;
+  gap: 23px;
+}
+
+.card {
+}
+
+.counter {
+  font-size: 26px;
+  border-radius: 12.5px;
+  color: #fff;
+  background-color: #41657c;
+  text-align: center;
+  display: inline-block;
+  padding: 7.5px 15px;
+}

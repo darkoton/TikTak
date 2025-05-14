@@ -9,11 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "classnames": "^2.5.1",
+    "motion": "^12.11.1",
     "next": "15.3.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
+    "@iconify-icon/react": "^3.0.0",
+    "@iconify/react": "^6.0.0",
     "sass": "^1.88.0"
   }
 }

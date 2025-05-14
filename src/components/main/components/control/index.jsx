@@ -3,11 +3,22 @@ import style from './style.module.scss'
 import Image from 'next/image'
 import Switch from '@ui/switch'
 import { useState } from 'react'
+import useGameStore from '@/stores/game'
+import { Icon } from '@iconify-icon/react'
 
 const Control = () => {
 
+  const { betting, setBetting, setOpenChips, setStatus, pushStatus, status } = useGameStore()
   const [showAchivements, setShowAchivements] = useState(false)
-  console.log(style);
+
+  function confirmBet() {
+    if (status.includes('active')) {
+      pushStatus('play')
+    } else {
+      setStatus('active')
+    }
+    setOpenChips(false)
+  }
 
   return <div className={style.control}>
     <div className={style.top}>
@@ -19,7 +30,9 @@ const Control = () => {
         <Action text='Split' icon='/img/control/split.png' />
         <Action text='Double' icon='/img/control/double.png' />
 
-        <button disabled className={style.betButton}>Bet</button>
+        <button onClick={confirmBet} disabled={!betting || status.includes('play')} className={style.betButton}>
+          {status.includes('active') && !status.includes('play') ? <Icon className={style.buttonIcon} icon='icon-park-outline:poker' /> : 'Bet'}
+        </button>
       </div>
 
       <div className={style.widgets}>
@@ -87,7 +100,9 @@ const Control = () => {
       </li>
     </ul>
 
-      : <input className={style.input} type='number' placeholder='Enter bet amount...' />
+      : <input disabled={status.includes('active')} className={style.input} type='number' placeholder='Enter bet amount...' value={betting} onChange={(e) => {
+        setBetting(e.target.value)
+      }} />
     }
 
 
