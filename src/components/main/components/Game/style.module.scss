@@ -226,6 +226,17 @@
 }
 
 .card {
+  border-radius: 10px;
+  border: 4px solid transparent;
+  transition: all 0.3s ease 0s;
+
+  &.winner {
+    border-color: #1fff20;
+  }
+
+  &.lose {
+    border-color: #ff271f;
+  }
 }
 
 .counter {

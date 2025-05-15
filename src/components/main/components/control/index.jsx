@@ -8,7 +8,14 @@ import { Icon } from '@iconify-icon/react'
 
 const Control = () => {
 
-  const { betting, setBetting, setOpenChips, setStatus, pushStatus, status } = useGameStore()
+  const {
+    betting,
+    setBetting,
+    setOpenChips,
+    setStatus,
+    pushStatus,
+    status
+  } = useGameStore()
   const [showAchivements, setShowAchivements] = useState(false)
 
   function confirmBet() {
@@ -26,7 +33,7 @@ const Control = () => {
         style.actions
       }>
         <Action text='Hit' icon='/img/control/hit.png' />
-        <Action text='Stand' icon='/img/control/stand.png' />
+        <Action onClick={() => pushStatus('complete')} text='Stand' icon='/img/control/stand.png' />
         <Action text='Split' icon='/img/control/split.png' />
         <Action text='Double' icon='/img/control/double.png' />
 
@@ -115,8 +122,10 @@ const Control = () => {
   </div>
 }
 
-const Action = ({ text, icon }) => {
-  return <button className={style.action}>
+const Action = ({ text, icon, ...props }) => {
+  const { status } = useGameStore()
+
+  return <button disabled={!status.includes('play')} className={style.action} {...props}>
     {text && <span>{text}</span>}
 
     {icon && <Image src={icon} width={25} height={25} alt='icon' />}

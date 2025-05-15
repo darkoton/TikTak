@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from "motion/react"
 import useGameStore from '@/stores/game';
 import Chip from '@ui/chip';
+import { delay } from 'motion';
 
 const chips = [
   {
@@ -54,36 +55,6 @@ const chips = [
   },
 ]
 
-const cards = {
-  clubs: {
-    7: {
-      img: '/img/cards/clubs/7.png',
-      value: 7
-    },
-    10: {
-      img: '/img/cards/clubs/10.png',
-      value: 10
-    },
-    a: {
-      img: '/img/cards/clubs/a.png',
-      value: 11
-    },
-    q: {
-      img: '/img/cards/clubs/q.png',
-      value: 10
-    },
-  },
-  spades: {
-    5: {
-      img: '/img/cards/spades/5.png',
-      value: 5
-    },
-    10: {
-      img: '/img/cards/spades/10.png',
-      value: 10
-    },
-  }
-}
 
 const animations = {
   putSideBetting: {
@@ -103,14 +74,18 @@ const animations = {
   }
 }
 
+
+
 const Game = () => {
 
   const { betting, setBetting, openChips, setOpenChips,
-    status, setStatus, pushStatus
+    status, reset, getRandomCard, userCards, rivalCards, pushUserCards,
+    pushRivalCards, setRivalCards
   } = useGameStore()
 
   const [userChips, setUserChips] = useState([])
-
+  const [userWinner, setUserWinner] = useState(null)
+  const [rivalWinner, setRivalWinner] = useState(null)
 
   function addChip(chip) {
     setUserChips([...userChips, { id: userChips.length, ...chip }])
@@ -118,8 +93,35 @@ const Game = () => {
   }
 
   useEffect(() => {
-    if (status.includes('active')) {
+    if (status[status.length - 1] === 'play') {
+      for (let index = 0; index < 2; index++) {
+        pushUserCards({ id: index, ...getRandomCard() })
+      }
+      for (let index = 0; index < 2; index++) {
 
+        let rivalCard = { id: index, ...getRandomCard() }
+        if (index === 1) {
+          rivalCard.visible = false
+        }
+        pushRivalCards(rivalCard)
+      }
+    } else if (status[status.length - 1] === 'complete') {
+      const userCount = userCards.reduce((prev, curr) => prev + curr.value, 0)
+      const rivalCount = rivalCards.reduce((prev, curr) => prev + curr.value, 0)
+      setUserWinner(rivalCount < userCount && userCount <= 21)
+      setRivalWinner(rivalCount > userCount && rivalCount <= 21)
+
+      setRivalCards(rivalCards.map(c => {
+        c.visible = true
+        return c
+      }))
+
+      setTimeout(() => {
+        reset()
+        setUserWinner(null)
+        setRivalWinner(null)
+        setBetting(0)
+      }, 3000);
     }
   }, [status])
 
@@ -131,122 +133,159 @@ const Game = () => {
       <h3 className={style.subtitle}>INSURRANCE PAYS 2 to 1</h3>
     </motion.div>
     <div className={style.lea}>
-
-      {status.includes('play') && <>
-        <div className={`${style.hand} ${style.handRival}`}>
-          <div className={style.cards}>
-            <Card />
-            <Card visible={false} />
+      <AnimatePresence>
+        {status.includes('play') && <>
+          <div className={`${style.hand} ${style.handRival}`}>
+            <div className={style.cards}>
+              {rivalCards.map((c, index) => <Card winner={rivalWinner} key={c.id} index={index} card={c} />)}
+            </div>
+            <motion.div
+              initial={{
+                y: '100%',
+                opacity: 0
+              }}
+              animate={{
+                y: '0%',
+                opacity: 1
+              }}
+              transition={{
+                duration: 0.5,
+                delay: 1
+              }}
+              className={style.counter}
+              key="counter-rival"
+            >{
+                status.includes('complete')
+                  ? rivalCards.reduce((prev, curr) => prev + curr.value, 0)
+                  : rivalCards.filter(c => c.visible).reduce((prev, curr) => prev + curr.value, 0)
+              }</motion.div>
           </div>
-          <div className={style.counter}>20</div>
-        </div>
 
-        <div className={`${style.hand} ${style.handUser}`}>
-          <div className={style.cards}>
-            <Card />
-            <Card />
+          <div className={`${style.hand} ${style.handUser}`}>
+            <div className={style.cards}>
+              {userCards.map((c, index) => <Card winner={userWinner} key={c.id} index={index} card={c} />)}
+            </div>
+            <motion.div
+              initial={{
+                y: '100%',
+                opacity: 0
+              }}
+              animate={{
+                y: '0%',
+                opacity: 1
+              }}
+              transition={{
+                duration: 0.5,
+                delay: 1
+              }}
+              className={style.counter}
+              key="counter-user"
+            >{
+                userCards.reduce((prev, curr) => prev + curr.value, 0)
+              }</motion.div>
           </div>
-          <div className={style.counter}>20</div>
-        </div>
-      </>}
-
-      <motion.div
-        className={style.betting}
-        animate={[
-          status.includes('play') && animations.putSideBetting
-        ]}
-        transition={{
-          duration: 0.5
-        }}
-      >
-        <div className={`${style.bettingArc} ${style.bettingArcLeft}`}>
-          <Image src='/img/game/arc.png' width={65} height={195} alt='Arc' />
-          <span>РР</span>
-        </div>
-
-        <div className={style.bettingChip}>
-          <Image src='/img/game/ton-chip.png' width={118} height={118} alt='Ton chip' />
-        </div>
-
-        <div className={`${style.bettingArc} ${style.bettingArcRight}`}>
-          <Image src='/img/game/arc.png' width={65} height={195} alt='Arc' />
-          <span>21+3</span>
-        </div>
-
-        {status.includes('active') && <>
-
-          <motion.div
-            key='rival1'
-            initial={{
-              pointerEvents: 'none',
-              opacity: 0,
-              position: 'absolute',
-              left: '50%',
-              x: '-50%',
-              top: '125%',
-            }}
-            animate={{
-              opacity: 1,
-              top: '50%',
-              y: '-50%'
-            }}
-
-          >
-            <Chip options={{
-              value: betting,
-              size: 120,
-            }} />
-          </motion.div>
-
-          <motion.div
-            key='rival2'
-            initial={{
-              pointerEvents: 'none',
-              opacity: 0,
-              position: 'absolute',
-              left: '-20%',
-              top: '50%',
-              y: '-50%'
-            }}
-            animate={{
-              opacity: 1,
-              left: '0%'
-            }}
-            transition={{
-              delay: 1
-            }}
-          >
-            <Chip options={{
-              value: 5,
-              size: 50,
-            }} />
-          </motion.div>
-
-          <motion.div
-            initial={{
-              pointerEvents: 'none',
-              opacity: 0,
-              position: 'absolute',
-              right: '-20%',
-              top: '50%',
-              y: '-50%'
-            }}
-            animate={{
-              opacity: 1,
-              right: '0%'
-            }}
-            transition={{
-              delay: 1.5
-            }}
-          >
-            <Chip options={{
-              value: 5,
-              size: 50,
-            }} />
-          </motion.div>
         </>}
 
-      </motion.div>
+        <motion.div
+          className={style.betting}
+          animate={[
+            status.includes('play') && animations.putSideBetting
+          ]}
+          transition={{
+            duration: 0.5
+          }}
+          key="betting"
+
+        >
+          <div className={`${style.bettingArc} ${style.bettingArcLeft}`}>
+            <Image src='/img/game/arc.png' width={65} height={195} alt='Arc' />
+            <span>РР</span>
+          </div>
+
+          <div className={style.bettingChip}>
+            <Image src='/img/game/ton-chip.png' width={118} height={118} alt='Ton chip' />
+          </div>
+
+          <div className={`${style.bettingArc} ${style.bettingArcRight}`}>
+            <Image src='/img/game/arc.png' width={65} height={195} alt='Arc' />
+            <span>21+3</span>
+          </div>
+
+          {status.includes('active') && <>
+
+            <motion.div
+              key='rival1'
+              initial={{
+                pointerEvents: 'none',
+                opacity: 0,
+                position: 'absolute',
+                left: '50%',
+                x: '-50%',
+                top: '125%',
+              }}
+              animate={{
+                opacity: 1,
+                top: '50%',
+                y: '-50%'
+              }}
+
+            >
+              <Chip options={{
+                value: betting,
+                size: 120,
+              }} />
+            </motion.div>
+
+            <motion.div
+              key='rival2'
+              initial={{
+                pointerEvents: 'none',
+                opacity: 0,
+                position: 'absolute',
+                left: '-20%',
+                top: '50%',
+                y: '-50%'
+              }}
+              animate={{
+                opacity: 1,
+                left: '0%'
+              }}
+              transition={{
+                delay: 1
+              }}
+            >
+              <Chip options={{
+                value: 5,
+                size: 50,
+              }} />
+            </motion.div>
+
+            <motion.div
+              initial={{
+                pointerEvents: 'none',
+                opacity: 0,
+                position: 'absolute',
+                right: '-20%',
+                top: '50%',
+                y: '-50%'
+              }}
+              animate={{
+                opacity: 1,
+                right: '0%'
+              }}
+              transition={{
+                delay: 1.5
+              }}
+            >
+              <Chip options={{
+                value: 5,
+                size: 50,
+              }} />
+            </motion.div>
+          </>}
+
+        </motion.div>
+      </AnimatePresence>
     </div>
 
     <motion.div
@@ -325,17 +364,39 @@ const ChipButton = ({ options, ghost, ...props }) => {
   </button >
 }
 
-const Card = ({ visible = true }) => {
-  return <div className={style.card}>
-    <AnimatePresence>
-      {!visible ?
-        <motion.div>
-          <Image src='/img/cards/shirt.png' width={91} height={136} alt='Shirt' />
-        </motion.div>
-        :
-        <motion.div>
-          <Image src='/img/cards/clubs/10.png' width={91} height={136} alt='Card' />
-        </motion.div>}
+const Card = ({ card, winner, index = 0 }) => {
+
+  return <div className={classNames(style.card, {
+    [style.winner]: winner === true,
+    [style.lose]: winner === false
+  })}>
+    <AnimatePresence >
+      <motion.div initial={{
+        opacity: 0,
+        x: '100%'
+      }}
+        animate={{
+          opacity: 1,
+          x: '0%'
+        }}
+        transition={{
+          duration: 0.5,
+          delay: 0.8 + 0.2 * index
+        }}>
+        <AnimatePresence>
+          {!card.visible
+            ? <motion.div
+              exit={{
+                opacity: 0,
+                position: 'absolute',
+              }}
+              key='shirt'>
+              <Image src='/img/cards/shirt.png' width={91} height={136} alt='Shirt' />
+            </motion.div>
+            : <Image src={`/img/cards/${card.suit}/${card.name}.png`} width={91} height={136} alt='Card' />}
+        </AnimatePresence>
+
+      </motion.div>
     </AnimatePresence>
   </div>
 }

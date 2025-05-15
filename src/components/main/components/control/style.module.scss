@@ -30,17 +30,23 @@
   border-radius: 15px;
   width: 100%;
   font-weight: 900;
-
-  color: #1a2832;
+  color: #41657c;
   font-size: 27px;
 
-  @media (any-hover: hover) {
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-    &:hover {
-      background-color: #162c39;
-      color: #41657c;
+  &:not(:disabled) {
+    @media (any-hover: hover) {
+      cursor: pointer;
+      transition: all 0.3s ease 0s;
+      &:hover {
+        background-color: #162c39;
+        color: #41657c;
+      }
     }
+  }
+
+  &:disabled {
+    color: #1a2832;
+    cursor: not-allowed;
   }
 }
 
