@@ -74,8 +74,15 @@ const useGameStore = create((set) => ({
       status: ['pending'],
       userCards: [],
       rivalCards: [],
+      insurranceActive: false
     })
-  }
+  },
+
+  insurranceQuestion: false,
+  setInsurranceQuestion: (v) => set({ insurranceQuestion: v }),
+
+  insurranceActive: false,
+  setInsurranceActive: (v) => set({ insurranceActive: v })
 }))
 
 export default useGameStore

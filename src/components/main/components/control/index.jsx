@@ -1,10 +1,13 @@
 'use client'
 import style from './style.module.scss'
 import Image from 'next/image'
-import Switch from '@ui/switch'
+import Switch from '@/components/ui/Switch'
 import { useState } from 'react'
 import useGameStore from '@/stores/game'
 import { Icon } from '@iconify-icon/react'
+import classNames from 'classnames'
+import AchievementNotf from '@/components/ui/Achievement'
+import { toast } from 'react-toastify';
 
 const Control = () => {
 
@@ -14,29 +17,60 @@ const Control = () => {
     setOpenChips,
     setStatus,
     pushStatus,
-    status
+    status,
+    insurranceQuestion,
+    setInsurranceQuestion,
+    setInsurranceActive
   } = useGameStore()
   const [showAchivements, setShowAchivements] = useState(false)
 
   function confirmBet() {
+
     if (status.includes('active')) {
       pushStatus('play')
+      notify()
     } else {
       setStatus('active')
     }
     setOpenChips(false)
   }
 
+  const notify = () => {
+    toast(AchievementNotf, {
+      closeButton: false,
+      position: 'top-left',
+      customProgressBar: true,
+      autoClose: false,
+      style: {
+        width: "auto",
+        maxWidth: '500px',
+        padding: 0,
+        background: 'transparent'
+      }
+    });
+  };
+
   return <div className={style.control}>
     <div className={style.top}>
       <div className={
         style.actions
       }>
-        <Action text='Hit' icon='/img/control/hit.png' />
-        <Action onClick={() => pushStatus('complete')} text='Stand' icon='/img/control/stand.png' />
-        <Action text='Split' icon='/img/control/split.png' />
-        <Action text='Double' icon='/img/control/double.png' />
 
+        {insurranceQuestion ? <>
+          <Action onClick={() => {
+            setInsurranceActive(true)
+            setInsurranceQuestion(false)
+          }} className={style.row} text='Yes' icon='/img/control/guard.svg' />
+          <Action onClick={() => {
+            setInsurranceActive(false)
+            setInsurranceQuestion(false)
+          }} className={style.row} text='No' icon='/img/control/no-guard.svg' />
+        </> : <>
+          <Action disabled={!status.includes('play')} text='Hit' icon='/img/control/hit.png' />
+          <Action disabled={!status.includes('play')} onClick={() => pushStatus('complete')} text='Stand' icon='/img/control/stand.png' />
+          <Action disabled={!status.includes('play')} text='Split' icon='/img/control/split.png' />
+          <Action disabled={!status.includes('play')} text='Double' icon='/img/control/double.png' />
+        </>}
         <button onClick={confirmBet} disabled={!betting || status.includes('play')} className={style.betButton}>
           {status.includes('active') && !status.includes('play') ? <Icon className={style.buttonIcon} icon='icon-park-outline:poker' /> : 'Bet'}
         </button>
@@ -45,7 +79,9 @@ const Control = () => {
       <div className={style.widgets}>
         <div className={`${style.widget} ${style.widgetAchievements}`}
           onClick={() => setShowAchivements(!showAchivements)}>
-          <span className={style.widgetText}>Achievements</span>
+          <span className={style.widgetText}>Achievements
+            <span className={style.achievementsCount}>1</span>
+          </span>
 
           <Image className={style.widgetArrow} src='/img/control/arrow.png' width={15} height={11} alt='arrow' />
         </div>
@@ -122,10 +158,10 @@ const Control = () => {
   </div>
 }
 
-const Action = ({ text, icon, ...props }) => {
+const Action = ({ text, icon, className = '', disabled = false, ...props }) => {
   const { status } = useGameStore()
 
-  return <button disabled={!status.includes('play')} className={style.action} {...props}>
+  return <button disabled={disabled} className={classNames(style.action, className)} {...props}>
     {text && <span>{text}</span>}
 
     {icon && <Image src={icon} width={25} height={25} alt='icon' />}

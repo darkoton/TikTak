@@ -7,8 +7,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from "motion/react"
 import useGameStore from '@/stores/game';
-import Chip from '@ui/chip';
-import { delay } from 'motion';
+import Chip from '@/components/ui/Chip';
 
 const chips = [
   {
@@ -60,7 +59,7 @@ const animations = {
   putSideBetting: {
     scale: 0.5,
     y: '150%',
-    pointerEvents: 'none'
+    // pointerEvents: 'none'
   },
   hiddeActions: {
     opacity: 0,
@@ -78,9 +77,23 @@ const animations = {
 
 const Game = () => {
 
-  const { betting, setBetting, openChips, setOpenChips,
-    status, reset, getRandomCard, userCards, rivalCards, pushUserCards,
-    pushRivalCards, setRivalCards
+
+  const {
+    betting,
+    setBetting,
+    openChips,
+    setOpenChips,
+    status,
+    reset,
+    getRandomCard,
+    userCards,
+    rivalCards,
+    pushUserCards,
+    pushRivalCards,
+    setRivalCards,
+    insurranceQuestion,
+    setInsurranceQuestion,
+    insurranceActive
   } = useGameStore()
 
   const [userChips, setUserChips] = useState([])
@@ -126,11 +139,17 @@ const Game = () => {
   }, [status])
 
   return <div className={style.game}>
-    <motion.div animate={[
+    <motion.div className={style.top} animate={[
       status.includes('play') && animations.titleSpitLea
-    ]} className={style.titles}>
-      <h3 className={style.title}>BLACKJACK PAYS 3 TO 2</h3>
-      <h3 className={style.subtitle}>INSURRANCE PAYS 2 to 1</h3>
+    ]} >
+
+      {insurranceQuestion
+        ? <p className={style.insurranceMessage}>Woul you like Insurrance? </p>
+        : <div className={style.titles}>
+          <h3 className={style.title}>BLACKJACK PAYS 3 TO 2</h3>
+          <h3 className={style.subtitle}>INSURRANCE PAYS 2 to 1</h3>
+        </div>
+      }
     </motion.div>
     <div className={style.lea}>
       <AnimatePresence>
@@ -178,7 +197,9 @@ const Game = () => {
                 duration: 0.5,
                 delay: 1
               }}
-              className={style.counter}
+              className={classNames(style.counter, {
+                [style.winner]: userWinner
+              })}
               key="counter-user"
             >{
                 userCards.reduce((prev, curr) => prev + curr.value, 0)
@@ -210,6 +231,45 @@ const Game = () => {
             <Image src='/img/game/arc.png' width={65} height={195} alt='Arc' />
             <span>21+3</span>
           </div>
+
+          {insurranceActive && <motion.div
+            initial={{
+              opacity: 0,
+              x: '200%'
+            }}
+            animate={{
+              opacity: 1,
+              x: '105%'
+            }}
+            exit={{
+              opacity: 0,
+              x: '200%'
+            }}
+            className={style.bettingInsurrance}>
+            <p>Insurrance</p>
+            <span>2:1</span>
+          </motion.div>}
+
+          {status.includes('play') && !insurranceActive && <motion.div
+            onClick={() => setInsurranceQuestion(true)}
+            initial={{
+              opacity: 0,
+              x: '-250%'
+            }}
+            animate={{
+              opacity: 1,
+              x: '-155%'
+            }}
+            exit={{
+              opacity: 0,
+              x: '-250%'
+            }}
+            transition={{
+              delay: 0.5
+            }}
+            className={style.bettingRatio}>
+            <span>6:1</span>
+          </motion.div>}
 
           {status.includes('active') && <>
 
@@ -289,7 +349,6 @@ const Game = () => {
     </div>
 
     <motion.div
-
       className={style.actions}
       animate={[
         status.includes('play') && animations.hiddeActions

@@ -1,0 +1,132 @@
+.achiev {
+  border: 2px solid #254050;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+
+  @include mixins.fluid(border-width, 2px, 1px, 320px, 640px);
+  @include mixins.fluid(border-radius, 6px, 3px, 320px, 640px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #254050;
+
+  @include mixins.fluid(padding-top, 4px, 2px, 320px, 640px);
+  @include mixins.fluid(padding-bottom, 4px, 2px, 320px, 640px);
+  @include mixins.fluid(padding-left, 6px, 3px, 320px, 640px);
+  @include mixins.fluid(padding-right, 6px, 3px, 320px, 640px);
+}
+
+.message {
+  text-transform: uppercase;
+  color: #fff;
+  @include mixins.fluid(font-size, 14px, 7px, 320px, 640px);
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+
+  @include mixins.fluid(font-size, 20px, 10px, 320px, 640px);
+}
+
+.main {
+  display: flex;
+  background-color: #0e2436;
+}
+
+.picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #081822;
+  @include mixins.fluid(padding, 8px, 4px, 320px, 640px);
+
+  img {
+    @include mixins.fluid(max-width, 58px, 29px, 320px, 640px);
+    @include mixins.fluid(max-height, 72px, 36px, 320px, 640px);
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  @include mixins.fluid(padding, 8px, 4px, 320px, 640px);
+}
+
+.infoHead {
+  display: flex;
+  align-items: center;
+
+  @include mixins.fluid(gap, 8px, 4px, 320px, 640px);
+  @include mixins.fluid(margin-bottom, 8px, 4px, 320px, 640px);
+}
+
+.title {
+  text-transform: uppercase;
+  color: #fff;
+
+  @include mixins.fluid(font-size, 18px, 9px, 320px, 640px);
+}
+
+.rarity {
+  text-transform: uppercase;
+  background-color: #fce620;
+  color: #000;
+
+  @include mixins.fluid(font-size, 14px, 7px, 320px, 640px);
+  @include mixins.fluid(padding, 2px, 1px, 320px, 640px);
+  @include mixins.fluid(border-radius, 4px, 2px, 320px, 640px);
+}
+
+.xp {
+  background-color: #08191d;
+  color: #fce620;
+  @include mixins.fluid(padding, 2px, 1px, 320px, 640px);
+  @include mixins.fluid(font-size, 15px, 7.5px, 320px, 640px);
+}
+
+.desc {
+  color: #acbacc;
+
+  @include mixins.fluid(font-size, 16px, 8px, 320px, 640px);
+}
+
+.note {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  color: #acbacc;
+
+  @include mixins.fluid(font-size, 10px, 5px, 320px, 640px);
+}
+
+.share {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+  color: #fff;
+  background-color: #081822;
+
+  @include mixins.fluid(font-size, 14px, 7px, 320px, 640px);
+  @include mixins.fluid(padding, 10px, 5px, 320px, 640px);
+  @include mixins.fluid(padding-left, 18px, 9px, 320px, 640px);
+  @include mixins.fluid(padding-right, 18px, 9px, 320px, 640px);
+
+  span {
+    color: #fce620;
+
+    @include mixins.fluid(font-size, 12px, 6px, 320px, 640px);
+  }
+}

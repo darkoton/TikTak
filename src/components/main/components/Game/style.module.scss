@@ -4,7 +4,13 @@
   align-items: center;
   position: relative;
 }
-
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  @include mixins.fluid(min-height, 107px, 52px, 320px, 640px);
+}
 .titles {
   display: flex;
   flex-direction: column;
@@ -166,6 +172,61 @@
   }
 }
 
+.bettingInsurrance {
+  display: flex;
+  align-items: center;
+  background-color: #19ff24;
+  position: absolute;
+  right: 0;
+
+  @include mixins.fluid(gap, 16px, 8px, 320px, 640px);
+  @include mixins.fluid(border-radius, 16px, 8px, 320px, 640px);
+  @include mixins.fluid(padding-top, 4px, 2px, 320px, 640px);
+  @include mixins.fluid(padding-bottom, 4px, 2px, 320px, 640px);
+  @include mixins.fluid(padding-left, 8px, 4px, 320px, 640px);
+  @include mixins.fluid(padding-right, 8px, 4px, 320px, 640px);
+
+  p {
+    color: #000;
+    text-transform: uppercase;
+
+    @include mixins.fluid(font-size, 24px, 12px, 320px, 640px);
+  }
+
+  span {
+    background: #000;
+    color: #19ff24;
+
+    @include mixins.fluid(font-size, 32px, 16px, 320px, 640px);
+    @include mixins.fluid(padding-top, 4px, 2px, 320px, 640px);
+    @include mixins.fluid(padding-bottom, 4px, 2px, 320px, 640px);
+    @include mixins.fluid(padding-left, 12px, 6px, 320px, 640px);
+    @include mixins.fluid(padding-right, 12px, 6px, 320px, 640px);
+    @include mixins.fluid(border-top-right-radius, 16px, 8px, 320px, 640px);
+    @include mixins.fluid(border-bottom-right-radius, 16px, 8px, 320px, 640px);
+  }
+}
+
+.bettingRatio {
+  display: flex;
+  align-items: center;
+  border: 6px solid #f0b90b;
+  position: absolute;
+  left: 0;
+  color: #fff;
+
+  @include mixins.fluid(border-radius, 20px, 10px, 320px, 640px);
+  @include mixins.fluid(padding-top, 4px, 2px, 320px, 640px);
+  @include mixins.fluid(padding-bottom, 4px, 2px, 320px, 640px);
+  @include mixins.fluid(padding-left, 12px, 6px, 320px, 640px);
+  @include mixins.fluid(padding-right, 12px, 6px, 320px, 640px);
+  @include mixins.fluid(font-size, 32px, 16px, 320px, 640px);
+
+  @media (any-hover: hover) {
+    cursor: pointer;
+  }
+}
+
 .chips {
   height: 350px;
   width: 100%;
@@ -293,10 +354,28 @@
   text-align: center;
   display: inline-block;
 
-  @include mixins.fluid(font-size, 13px, 5px, 320px, 640px);
+  @include mixins.fluid(font-size, 20px, 10px, 320px, 640px);
   @include mixins.fluid(border-radius, 12.5px, 6.25px, 320px, 640px);
   @include mixins.fluid(padding-top, 7.5px, 3.75px, 320px, 640px);
   @include mixins.fluid(padding-bottom, 7.5px, 3.75px, 320px, 640px);
   @include mixins.fluid(padding-left, 15px, 7.5px, 320px, 640px);
   @include mixins.fluid(padding-right, 15px, 7.5px, 320px, 640px);
+
+  &.winner {
+    color: #000;
+    background-color: #1fff20;
+  }
+}
+
+.insurranceMessage {
+  background-color: #040f15;
+  border: 3px solid #182837;
+
+  @include mixins.fluid(font-size, 26px, 13px, 320px, 640px);
+  @include mixins.fluid(border-width, 3px, 1.5px, 320px, 640px);
+  @include mixins.fluid(border-radius, 6px, 3px, 320px, 640px);
+  @include mixins.fluid(padding-top, 14px, 7px, 320px, 640px);
+  @include mixins.fluid(padding-bottom, 14px, 7px, 320px, 640px);
+  @include mixins.fluid(padding-left, 24px, 12px, 320px, 640px);
+  @include mixins.fluid(padding-right, 24px, 12px, 320px, 640px);
 }

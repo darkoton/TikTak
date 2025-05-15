@@ -1,5 +1,5 @@
 import style from './style.module.scss'
-import Control from './components/control'
+import Control from './components/Control'
 import Game from './components/Game'
 
 const Main = () => {
