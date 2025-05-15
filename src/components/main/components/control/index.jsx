@@ -47,7 +47,7 @@ const Control = () => {
           onClick={() => setShowAchivements(!showAchivements)}>
           <span className={style.widgetText}>Achievements</span>
 
-          <Image src='/img/control/arrow.png' width={15} height={11} alt='arrow' />
+          <Image className={style.widgetArrow} src='/img/control/arrow.png' width={15} height={11} alt='arrow' />
         </div>
 
         <div className={`${style.widget} ${style.widgetCollected}`}>

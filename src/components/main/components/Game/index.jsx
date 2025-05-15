@@ -301,7 +301,7 @@ const Game = () => {
         <Icon icon="pajamas:redo" />
       </button>
 
-      <button onClick={() => setOpenChips(true)}>
+      <button className={style.chipsButton} onClick={() => setOpenChips(true)}>
         <Image src='/img/game/chips.png' width={150} height={70} alt='Chips' />
       </button>
 
@@ -338,7 +338,6 @@ const Game = () => {
 
         <button className={style.chipSum} onClick={() => setOpenChips(false)}>
           <Chip
-            style={{ fontSize: '50%' }}
             options={{
               textValue: betting,
               value: betting,

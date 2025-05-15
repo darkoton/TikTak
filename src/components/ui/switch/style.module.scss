@@ -8,25 +8,27 @@
 .label {
   cursor: pointer;
   text-indent: -9999px;
-  width: 36px;
-  height: 20px;
   background: grey;
   display: block;
   border-radius: 100px;
   position: relative;
   transition: background 0.3s ease 0s;
+
+  @include mixins.fluid(width, 36px, 18px, 320px, 640px);
+  @include mixins.fluid(height, 20px, 10px, 320px, 640px);
 }
 
 .label:after {
   content: "";
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 16px;
-  height: 16px;
   background: #fff;
   border-radius: 90px;
   transition: 0.3s;
+  left: 2px;
+
+  @include mixins.fluid(top, 2px, 1px, 320px, 640px);
+  @include mixins.fluid(width, 16px, 8px, 320px, 640px);
+  @include mixins.fluid(height, 16px, 8px, 320px, 640px);
 }
 
 .input:checked + .label {
@@ -34,10 +36,10 @@
 }
 
 .input:checked + .label:after {
-  left: calc(100% - 2px);
   transform: translateX(-100%);
+  left: calc(100% - 2px);
 }
 
 .label:active:after {
-  width: 20px;
+  @include mixins.fluid(width, 20px, 10px, 320px, 640px);
 }

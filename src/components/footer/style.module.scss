@@ -1,13 +1,15 @@
 .footer {
   background-color: #0f212e;
-  padding: 16px 0;
   display: flex;
   justify-content: center;
+
+  @include mixins.fluid(padding-top, 16px, 8px, 320px, 640px);
+  @include mixins.fluid(padding-bottom, 16px, 8px, 320px, 640px);
 }
 
 .link {
-  font-size: 15px;
   color: #fff;
+  @include mixins.fluid(font-size, 15px, 7.5px, 320px, 640px);
 
   @media (any-hover: hover) {
     cursor: pointer;

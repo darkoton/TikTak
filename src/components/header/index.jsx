@@ -23,7 +23,7 @@ const Header = () => {
 
     <div className={style.menu}>
       <button className={`${style.button} ${style.buttonMoney}`}>
-        <Image width={33} height={33} src="/img/icons/money.png" alt='Icon money' />
+        <Image className={style.buttonIcon} width={33} height={33} src="/img/icons/money.png" alt='Icon money' />
       </button>
 
       <button className={style.button}>
