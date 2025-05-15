@@ -20,7 +20,8 @@ const Control = () => {
     status,
     insurranceQuestion,
     setInsurranceQuestion,
-    setInsurranceActive
+    setInsurranceActive,
+    splitCards, splitActive
   } = useGameStore()
   const [showAchivements, setShowAchivements] = useState(false)
 
@@ -68,7 +69,7 @@ const Control = () => {
         </> : <>
           <Action disabled={!status.includes('play')} text='Hit' icon='/img/control/hit.png' />
           <Action disabled={!status.includes('play')} onClick={() => pushStatus('complete')} text='Stand' icon='/img/control/stand.png' />
-          <Action disabled={!status.includes('play')} text='Split' icon='/img/control/split.png' />
+          <Action onClick={splitCards} disabled={!status.includes('play') || splitActive} text='Split' icon='/img/control/split.png' />
           <Action disabled={!status.includes('play')} text='Double' icon='/img/control/double.png' />
         </>}
         <button onClick={confirmBet} disabled={!betting || status.includes('play')} className={style.betButton}>

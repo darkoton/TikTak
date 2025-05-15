@@ -108,11 +108,19 @@ const Game = () => {
   useEffect(() => {
     if (status[status.length - 1] === 'play') {
       for (let index = 0; index < 2; index++) {
-        pushUserCards({ id: index, ...getRandomCard() })
+        pushUserCards({
+          id: index,
+          delay: 0.8 + 0.2 * index,
+          ...getRandomCard(),
+        })
       }
       for (let index = 0; index < 2; index++) {
 
-        let rivalCard = { id: index, ...getRandomCard() }
+        let rivalCard = {
+          id: index,
+          delay: 0.8 + 0.2 * index,
+          ...getRandomCard()
+        }
         if (index === 1) {
           rivalCard.visible = false
         }
@@ -439,7 +447,7 @@ const Card = ({ card, winner, index = 0 }) => {
         }}
         transition={{
           duration: 0.5,
-          delay: 0.8 + 0.2 * index
+          delay: card.delay || null
         }}>
         <AnimatePresence>
           {!card.visible

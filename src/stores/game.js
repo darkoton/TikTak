@@ -74,7 +74,8 @@ const useGameStore = create((set) => ({
       status: ['pending'],
       userCards: [],
       rivalCards: [],
-      insurranceActive: false
+      insurranceActive: false,
+      splitActive: false
     })
   },
 
@@ -82,7 +83,24 @@ const useGameStore = create((set) => ({
   setInsurranceQuestion: (v) => set({ insurranceQuestion: v }),
 
   insurranceActive: false,
-  setInsurranceActive: (v) => set({ insurranceActive: v })
+  setInsurranceActive: (v) => set({ insurranceActive: v }),
+
+  splitActive: false,
+  splitCards: () => set(state => {
+    const userCards = state.userCards
+    const rivalCards = state.rivalCards
+
+    for (let index = 0; index < 2; index++) {
+      userCards.splice(1, 0, { ...state.getRandomCard(), id: userCards.length + index });
+      rivalCards.splice(1, 0, { ...state.getRandomCard(), id: userCards.length + index });
+    }
+
+    return {
+      userCards,
+      rivalCards,
+      splitActive: true
+    }
+  })
 }))
 
 export default useGameStore
