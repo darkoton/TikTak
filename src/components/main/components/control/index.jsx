@@ -6,8 +6,7 @@ import { useState } from 'react'
 import useGameStore from '@/stores/game'
 import { Icon } from '@iconify-icon/react'
 import classNames from 'classnames'
-import AchievementNotf from '@/components/ui/Achievement'
-import { toast } from 'react-toastify';
+import { useSound } from '@/context/SoundContext'
 
 const Control = () => {
 
@@ -23,33 +22,20 @@ const Control = () => {
     setInsurranceActive,
     splitCards, splitActive
   } = useGameStore()
+  const { play } = useSound()
   const [showAchivements, setShowAchivements] = useState(false)
 
   function confirmBet() {
 
     if (status.includes('active')) {
       pushStatus('play')
-      notify()
     } else {
       setStatus('active')
     }
     setOpenChips(false)
   }
 
-  const notify = () => {
-    toast(AchievementNotf, {
-      closeButton: false,
-      position: 'top-left',
-      customProgressBar: true,
-      autoClose: false,
-      style: {
-        width: "auto",
-        maxWidth: '500px',
-        padding: 0,
-        background: 'transparent'
-      }
-    });
-  };
+
 
   return <div className={style.control}>
     <div className={style.top}>
@@ -68,7 +54,10 @@ const Control = () => {
           }} className={style.row} text='No' icon='/img/control/no-guard.svg' />
         </> : <>
           <Action disabled={!status.includes('play')} text='Hit' icon='/img/control/hit.png' />
-          <Action disabled={!status.includes('play')} onClick={() => pushStatus('complete')} text='Stand' icon='/img/control/stand.png' />
+          <Action disabled={!status.includes('play')} onClick={() => {
+            play('dealerFlipCards')
+            pushStatus('complete')
+          }} text='Stand' icon='/img/control/stand.png' />
           <Action onClick={splitCards} disabled={!status.includes('play') || splitActive} text='Split' icon='/img/control/split.png' />
           <Action disabled={!status.includes('play')} text='Double' icon='/img/control/double.png' />
         </>}

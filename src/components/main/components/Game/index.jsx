@@ -8,6 +8,9 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from "motion/react"
 import useGameStore from '@/stores/game';
 import Chip from '@/components/ui/Chip';
+import { useSound } from '@/context/SoundContext'
+import AchievementNotf from '@/components/ui/Achievement'
+import { toast } from 'react-toastify';
 
 const chips = [
   {
@@ -77,7 +80,6 @@ const animations = {
 
 const Game = () => {
 
-
   const {
     betting,
     setBetting,
@@ -99,26 +101,50 @@ const Game = () => {
   const [userChips, setUserChips] = useState([])
   const [userWinner, setUserWinner] = useState(null)
   const [rivalWinner, setRivalWinner] = useState(null)
+  const { play } = useSound()
 
   function addChip(chip) {
     setUserChips([...userChips, { id: userChips.length, ...chip }])
     setBetting(betting + chip.value)
   }
 
+  const notify = () => {
+    toast(AchievementNotf, {
+      onOpen: () => play('achievementPop'),
+      onClose: () => play('selectButton'),
+      closeButton: false,
+      position: 'top-left',
+      customProgressBar: true,
+      autoClose: false,
+      style: {
+        width: "auto",
+        maxWidth: '500px',
+        padding: 0,
+        background: 'transparent'
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (userCards.length) {
+      if ((userCards.every(c => c.value === 10))) {
+        notify()
+      }
+    }
+  }, [userCards])
+
   useEffect(() => {
     if (status[status.length - 1] === 'play') {
       for (let index = 0; index < 2; index++) {
         pushUserCards({
           id: index,
-          delay: 0.8 + 0.2 * index,
+          delay: 0.8 + 0.4 * index,
           ...getRandomCard(),
         })
-      }
-      for (let index = 0; index < 2; index++) {
 
         let rivalCard = {
           id: index,
-          delay: 0.8 + 0.2 * index,
+          delay: 1 + 0.4 * index,
           ...getRandomCard()
         }
         if (index === 1) {
@@ -126,6 +152,9 @@ const Game = () => {
         }
         pushRivalCards(rivalCard)
       }
+
+
+      play('betAccepted')
     } else if (status[status.length - 1] === 'complete') {
       const userCount = userCards.reduce((prev, curr) => prev + curr.value, 0)
       const rivalCount = rivalCards.reduce((prev, curr) => prev + curr.value, 0)
@@ -278,11 +307,10 @@ const Game = () => {
             className={style.bettingRatio}>
             <span>6:1</span>
           </motion.div>}
-
           {status.includes('active') && <>
 
             <motion.div
-              key='rival1'
+              key='user'
               initial={{
                 pointerEvents: 'none',
                 opacity: 0,
@@ -296,7 +324,7 @@ const Game = () => {
                 top: '50%',
                 y: '-50%'
               }}
-
+              onAnimationStart={() => play('addChip')}
             >
               <Chip options={{
                 value: betting,
@@ -305,7 +333,7 @@ const Game = () => {
             </motion.div>
 
             <motion.div
-              key='rival2'
+              key='rival1'
               initial={{
                 pointerEvents: 'none',
                 opacity: 0,
@@ -321,6 +349,7 @@ const Game = () => {
               transition={{
                 delay: 1
               }}
+              onAnimationStart={() => setTimeout(() => play('addChip'), 1000)}
             >
               <Chip options={{
                 value: 5,
@@ -329,6 +358,7 @@ const Game = () => {
             </motion.div>
 
             <motion.div
+              key='rival2'
               initial={{
                 pointerEvents: 'none',
                 opacity: 0,
@@ -342,8 +372,10 @@ const Game = () => {
                 right: '0%'
               }}
               transition={{
-                delay: 1.5
+                delay: 1.5,
+
               }}
+              onAnimationStart={() => setTimeout(() => play('addChip'), 1500)}
             >
               <Chip options={{
                 value: 5,
@@ -368,7 +400,10 @@ const Game = () => {
         <Icon icon="pajamas:redo" />
       </button>
 
-      <button className={style.chipsButton} onClick={() => setOpenChips(true)}>
+      <button className={style.chipsButton} onClick={() => {
+        play('chipSelect')
+        setOpenChips(true)
+      }}>
         <Image src='/img/game/chips.png' width={150} height={70} alt='Chips' />
       </button>
 
@@ -377,7 +412,10 @@ const Game = () => {
       </button>
       <div className={classNames(style.chips, { [style.active]: openChips })}>
 
-        {chips.map((options) => <ChipButton key={options.value} onClick={() => addChip(options)} options={options} />)}
+        {chips.map((options) => <ChipButton key={options.value} onClick={() => {
+          play('addChip')
+          addChip(options)
+        }} options={options} />)}
 
         {userChips.map((chip) => (
           <motion.div
@@ -403,7 +441,10 @@ const Game = () => {
         ))}
 
 
-        <button className={style.chipSum} onClick={() => setOpenChips(false)}>
+        <button className={style.chipSum} onClick={() => {
+          play('chipSelect')
+          setOpenChips(false)
+        }}>
           <Chip
             options={{
               textValue: betting,
@@ -431,6 +472,9 @@ const ChipButton = ({ options, ghost, ...props }) => {
 }
 
 const Card = ({ card, winner, index = 0 }) => {
+  const { play } = useSound()
+
+
 
   return <div className={classNames(style.card, {
     [style.winner]: winner === true,
@@ -448,7 +492,8 @@ const Card = ({ card, winner, index = 0 }) => {
         transition={{
           duration: 0.5,
           delay: card.delay || null
-        }}>
+        }}
+        onAnimationStart={() => setTimeout(() => play('cardDeal'), (card.delay * 1000) || 0)}>
         <AnimatePresence>
           {!card.visible
             ? <motion.div

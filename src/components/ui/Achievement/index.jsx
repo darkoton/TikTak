@@ -5,6 +5,7 @@ import Image from 'next/image'
 import ProgressBar from './components/ProgressBar'
 
 const Achievement = ({ closeToast }) => {
+
   return <div className={style.achiev}>
     <div className={style.header}>
       <p className={style.message}>New Achievement</p>

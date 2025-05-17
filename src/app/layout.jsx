@@ -1,7 +1,6 @@
 import localFont from 'next/font/local'
 import "@/style/main.scss";
 import { ToastContainer } from 'react-toastify';
-
 const proximaNova = localFont({
   src: [
     {
@@ -26,12 +25,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <body className={proximaNova.className}>
         <div className="wrapper">
           <div className="content">
             <ToastContainer />
+
             {children}
           </div>
         </div>
